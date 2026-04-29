@@ -4,7 +4,7 @@ from .wheat import Wheat
 
 
 class WheatFactory(mesa.Agent):
-    def __init__(self, model: mesa.Model, food_amount: int = 4, frequency: int = 10, food_lifetime: int = 350):
+    def __init__(self, model: mesa.Model, food_amount: int = 4, frequency: int = 10, food_lifetime: int = 30):
         """Class responsible for creating food for Pheasants."""
         super().__init__(model.next_id(), model)
         self.food_amount: int = food_amount

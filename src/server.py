@@ -77,17 +77,16 @@ model_params = {
     
     "fox_lifetime": mesa.visualization.NumberInput("Fox Lifetime", value=10),
     "fox_consumption": mesa.visualization.NumberInput("Fox Consumption", value=1),
-    "fox_sound_force": mesa.visualization.NumberInput("Initial Sound Force", value=10),
-    "fox_mating_season": mesa.visualization.NumberInput("Fox Until Next Mating Season", value=40),
+    "fox_mating_season": mesa.visualization.NumberInput("Fox Mating Season Time Occurences", value=40),
     "fox_mating_range": mesa.visualization.NumberInput("Fox Mating Range", value=5),
     
-    "pheasant_lifetime": mesa.visualization.NumberInput("Pheasant Lifetime", value=3),
+    "pheasant_lifetime": mesa.visualization.NumberInput("Pheasant Lifetime", value=5),
     "pheasant_consumption": mesa.visualization.NumberInput("Pheasant Consumption", value=1),
-    "pheasant_mating_season": mesa.visualization.NumberInput("Pheasant Until Next Mating Season", value=30),
+    "pheasant_mating_season": mesa.visualization.NumberInput("Pheasant Mating Season Time Occurences", value=30),
     "pheasant_mating_range": mesa.visualization.NumberInput("Pheasant Mating Range", value=5),
     
-    "food_lifetime": mesa.visualization.NumberInput("Wheat Lifetime", value=30),
-    "food_frequency": mesa.visualization.NumberInput("Wheat Frequency", value=2),
+    "food_lifetime": mesa.visualization.NumberInput("Wheat Lifetime", value=10),
+    "food_frequency": mesa.visualization.NumberInput("Wheat Frequency", value=40),
     
 }
 

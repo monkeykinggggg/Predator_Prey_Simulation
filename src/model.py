@@ -12,7 +12,6 @@ class SimulationModel(mesa.Model):
                 initial_wheat:int,
                 initial_fox:int,
                 initial_pheasant:int,
-                fox_sound_force: int,
                 
                 fox_lifetime: int,
                 fox_consumption: int,
@@ -48,8 +47,8 @@ class SimulationModel(mesa.Model):
             
         }
         self.pheasant_params={
-            "lifetime": 3,
-            "consumption": 1,
+            "lifetime": pheasant_lifetime,
+            "consumption": pheasant_consumption,
         }
         self.fox_habitat_params={
             "mating_season": fox_mating_season,
@@ -91,7 +90,7 @@ class SimulationModel(mesa.Model):
             self.grid.place_agent(fox, (x, y))
 
         for _ in range(self.num_of_pheasants):
-            pheasant = Pheasant(self)
+            pheasant = Pheasant(self, lifetime=self.pheasant_params["lifetime"], consumption=self.pheasant_params["consumption"])
             self.scheduler.add(pheasant)
 
             x = self.random.randrange(self.width)
@@ -101,7 +100,7 @@ class SimulationModel(mesa.Model):
         for _ in range(self.num_of_wheat):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            Wheat.create(self, (x, y), self.food_factory_params["food_lifetime"])
+            Wheat.create(self, (x, y), food_lifetime=self.food_factory_params["food_lifetime"])
             
         self.running = True
 
