@@ -37,7 +37,9 @@ Pokazać że lis zmienia stan pomiędzy WALKING, SPRINT i SNEAK ( skrada sie, id
 
 Pokazać, że lisy sie rozmnazają
 
+Zboże, które co jakiś czas rośnie, samo z sb ma okres życia.
 
+Zboże zjadane przez bażanta.
 
 
 
