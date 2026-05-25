@@ -114,7 +114,7 @@ class Pheasant(Animal):
         if self.status == PheasantStatus.SPRINTING:
             energy_cost *= 4
         elif self.status == PheasantStatus.FROZEN:
-            energy_cost *= 2
+            energy_cost *= 0.5
             
         self.lifetime -= energy_cost
         threats = self.check_threats()
