@@ -1,86 +1,23 @@
 # Predator_Prey_Simulation
+Wildlife simulation which aims to mimic real-world predator-prey scenarios where the environment is inhabited by pheasants, foxes, and wheat.
 
-### TODO
-Naprawić zachowanie bażantów
-Mapa - ta sama inicjalizacja, mozna lepiej porownac parametry i wykresy
-Dokumentacja
+## Features & Mechanics
+This model extends classical predator-prey dynamics with advanced grid-based spatial features:
+- **Sensory Systems:** Foxes leave sound waves that propagate through the grid, while pheasants leave pheromone traces for predators to follow.
+- **Dynamic States:** 
+  - **Foxes** adapt their movement by `SNEAKING` when prey is near or `SPRINTING` to catch it.
+  - **Pheasants** react to threats by freezing (`FROZEN`) or escaping (`SPRINTING`), which heavily impacts their metabolic energy drain.
+- **Realistic Energy & Reproduction:** The simulation accounts for realistic lifespans, breeding seasons (dependent on population size), and energy consumption based on animal actions.
 
+## How to run
+You need to sync dependencies via the `uv` tool and run the mesa server:
+```bash
+uv sync
+uv run mesa runserver
+```
+The simulation should be accessible on [http://localhost:8888](http://localhost:8888/). 
+Set up the parameters in the sidebar (or leave defaults), press `Reset` to apply changes, and click the `Start` button to run the animation. You can also run the simulation step by step using the `Step` button.
 
-
-Parametr: jednostka długości życia:
-
-Pszenica 
-Pszenica jest rośliną jednoroczną, więc jej „życie” trwa zwykle jeden sezon wegetacyjny.
-
-Typowe wartości:
-od zasiania do obumarcia:
-około 4–8 miesięcy
-zależnie od odmiany (ozima/jara) i klimatu
-Możesz przyjąć w symulacji:
-młoda pszenica: 0–30% życia
-dojrzała: 30–80%
-obumierająca / gotowa do zbioru: 80–100%
-
-https://www.britannica.com/plant/wheat
-
-
-Bażant zwyczajny
-W naturze:
-średnia długość życia:
-zwykle 1–3 lata
-wiele osobników ginie wcześniej przez:
-drapieżniki
-zimę
-choroby
-polowania
-
-https://animaldiversity.org/accounts/Phasianus_colchicus/
-
-
-Bażant zjada pszenicę na każdym etapie jej życia. Chętnie kosztuje ziarna, kiełki, młodą pszenicą jak i nawet czasem obumarłą, więc faza wzrostu pszenicy nie ma znaczenia w symulacji. Bażant w naszej symulacji nie ma inego źródła pokarmu, więc naawet gdy pszenica jest niedojrzała, pożywia się nią.
-
-Lis rudy
-W naturze:
-średnia długość życia:
-około 2–5 lat
-wysoka śmiertelność młodych
-
-
-Realistyczny maksymalny wiek w naturze: 5 lat
-
-W symulacji jako parametr podajemy maksymalny wiek życia w naturze. (czyli dopiero potem nasze czyniki w postaci zjadających zmniejszają długość życia)
-
-
-
-
-## rozmnazanie
-Pszenica
-Rozmnaza się raz pod koniec życia (czyli co długość życia pszenicy, powstają nowe)
-
-Bażant
-Bażanty:
-rozmnażają się sezonowo,
-zwykle:
-1 raz w roku
-okres lęgowy:
-wiosna / początek lata
-
-Samica:
-składa:
-około 8–15 jaj - wykluwa się około 80% jaj, czyli średnio rozmnaża się ostatecznie o 5-12 w sezonie lęgowym z jednej samicy
-
-Lis
-Lisy:
-rozmnażają się:
-zwykle 1 raz w roku
-młode rodzą się wiosną
-Miot:
-zwykle:
-4–6 młodych
-
-
-WAZNE!: jezeli dany gatunek wymrze to juz go nie odżywamy, kończymy z nim a jednocześnie kończymy z symulacją - jest to na tyle żadki przypadek, że możemy pominąć elemnt odżywania gatunku. Sama testująć symulację na różnych konfiguracjach parametrów, nie udało mi się dostać takiej sytuacji
-
-
-Środowiska do rozmnażania
-Tworzone są po przeciwnych narożnikach mapy, więc nasdtepuje spotkanie gatunków po dwóch przeciwnychg stronach (flad on themselves)
+## Configurable Parameters
+- **Initial Populations:** Adjust the starting number of foxes, pheasants, and wheat.
+- **Year Unit:** Controls how many frames constitute a single "year", directly scaling maximum lifespan limits and mating season frequency.
