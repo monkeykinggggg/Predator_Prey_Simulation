@@ -18,8 +18,11 @@ class WheatFactory(mesa.Agent):
         self.iteration += 1
         if self.iteration == self.frequency:
             self.iteration = 0
-            for _ in range(self.food_amount):
-                # w losowym miejscu rosnie pszenica z okreslona zainicjowana dlugoscia zycia
-                x = self.model.random.randrange(self.model.width)
-                y = self.model.random.randrange(self.model.height)
-                Wheat.create(self.model, (x,y), self.food_lifetime)
+            wheat_count = sum(1 for a in self.model.scheduler.agents if isinstance(a, Wheat))//2 # okolo polowa populacji do damskie osobniki
+            if wheat_count > 0:
+                total_new_wheat = wheat_count * self.food_amount
+                for _ in range(total_new_wheat):
+                    # w losowym miejscu rosnie pszenica z okreslona zainicjowana dlugoscia zycia
+                    x = self.model.random.randrange(self.model.width)
+                    y = self.model.random.randrange(self.model.height)
+                    Wheat.create(self.model, (x,y), self.food_lifetime)

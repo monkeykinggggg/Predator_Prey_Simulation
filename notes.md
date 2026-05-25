@@ -28,6 +28,3 @@ python3 main.py
 ```
 Żeby uruchomić określoną ilość iteracji
 
-Do zaimplementowania:
-System energii
-Mechanizm umierania

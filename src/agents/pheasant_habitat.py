@@ -14,10 +14,14 @@ class PheasantHabitat(mesa.Agent):
     def create_animals(self) -> None:
         """Function called manually after the agent is created."""
         pheasant = import_module("src.agents.pheasant")
-        number_of_pheasants_to_create = randint(self.mating_range[0], self.mating_range[1])
-        self.model.num_of_pheasants += number_of_pheasants_to_create
-        for _ in range(number_of_pheasants_to_create):
-            pheasant.Pheasant.create(self.model, self)
+        pheasant_count = sum(1 for a in self.model.scheduler.agents if isinstance(a, pheasant.Pheasant))//2 # okolo polowa populacji do samice
+        if pheasant_count > 0:
+            total_pheasants_to_create = 0
+            for _ in range(pheasant_count):
+                total_pheasants_to_create += randint(self.mating_range[0], self.mating_range[1])
+            self.model.num_of_pheasants += total_pheasants_to_create
+            for _ in range(total_pheasants_to_create):
+                pheasant.Pheasant.create(self.model, self)
 
     @staticmethod
     def create(model: mesa.Model) -> 'PheasantHabitat':

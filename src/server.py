@@ -66,33 +66,41 @@ def fox_pheasant_portrayal(agent):
 
     return portrayal
 
-canvas_element = mesa.visualization.CanvasGrid(fox_pheasant_portrayal, 20, 20, 720, 720)
+canvas_element = mesa.visualization.CanvasGrid(fox_pheasant_portrayal, 80, 80, 880, 880)
+
+class SpacerElement(mesa.visualization.TextElement):
+    def render(self, model):
+        return "<div style='height: 40px;'></div>"
+
+spacer = SpacerElement()
+
+chart_element = mesa.visualization.ChartModule(
+    [
+        {"Label": "Lisy", "Color": "#CF296B"},
+        {"Label": "Bażanty", "Color": "#FFD700"},
+        {"Label": "Pszenica", "Color": "#134F13"}
+    ]
+)
 
 model_params = {
     "title": "Simulation Parameters",
-    "iterations": 100,
-    "initial_fox": mesa.visualization.NumberInput("Initial Fox Population", value=4),
-    "initial_pheasant": mesa.visualization.NumberInput("Initial Pheasants Population", value=4),
-    "initial_wheat": mesa.visualization.NumberInput("Initial Wheat Amount", value=5),
-    
-    "fox_lifetime": mesa.visualization.NumberInput("Fox Lifetime", value=10),
-    "fox_consumption": mesa.visualization.NumberInput("Fox Consumption", value=1),
-    "fox_mating_season": mesa.visualization.NumberInput("Fox Mating Season Time Occurences", value=40),
-    "fox_mating_range": mesa.visualization.NumberInput("Fox Mating Range", value=5),
-    
-    "pheasant_lifetime": mesa.visualization.NumberInput("Pheasant Lifetime", value=5),
-    "pheasant_consumption": mesa.visualization.NumberInput("Pheasant Consumption", value=1),
-    "pheasant_mating_season": mesa.visualization.NumberInput("Pheasant Mating Season Time Occurences", value=30),
-    "pheasant_mating_range": mesa.visualization.NumberInput("Pheasant Mating Range", value=5),
-    
-    "food_lifetime": mesa.visualization.NumberInput("Wheat Lifetime", value=10),
-    "food_frequency": mesa.visualization.NumberInput("Wheat Frequency", value=40),
-    
+    "initial_fox": mesa.visualization.NumberInput("Inicjalizacyjna Populacja lisów", value=4),
+    "initial_pheasant": mesa.visualization.NumberInput("Inicjalizacyjna Populacja bażantów", value=4),
+    "initial_wheat": mesa.visualization.NumberInput("Inicjalizacyjna Populacja pszenicy", value=5),
+
+    "year_unit": mesa.visualization.NumberInput(
+        "Jednostka roku<br><small>(wykorzystywana do długości życia zwierząt oraz okresów rozrodczych)</small>", 
+        value=5
+    ),
+    "base_consumption_unit": mesa.visualization.NumberInput(
+        "Jednostka zużycia energii<br><small>(wykorzystywana do metabolizmu)</small>", 
+        value=0.25
+    ),
 }
 
 server = mesa.visualization.ModularServer(
     SimulationModel,
-    visualization_elements=[canvas_element],
+    visualization_elements=[canvas_element, spacer, chart_element],
     name="Pheasant Fox Simulation",
     model_params=model_params,
     port=8888

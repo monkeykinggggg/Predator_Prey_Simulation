@@ -62,7 +62,7 @@ class Pheasant(Animal):
         if wheat_here:
             food = wheat_here[0]
             food.eat_food()
-            self.lifetime += 6
+            self.lifetime += self.consumption * 10  # dodajemy energii 10 krotnosc podstawowej energii
     
     def listen(self) -> dict:
         """Listen to the sound in the hearing range."""
@@ -106,12 +106,17 @@ class Pheasant(Animal):
             pheromone.value = self.trace    # initial weight value of the pheromone
 
     def step(self) -> None:
-        print(self.status)
         if self.lifetime <= 0:
             self.remove()
             return
         
-        self.lifetime -= self.consumption
+        energy_cost = self.consumption
+        if self.status == PheasantStatus.SPRINTING:
+            energy_cost *= 4
+        elif self.status == PheasantStatus.FROZEN:
+            energy_cost *= 2
+            
+        self.lifetime -= energy_cost
         threats = self.check_threats()
         
         match self.status:

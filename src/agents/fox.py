@@ -64,7 +64,7 @@ class Fox(Animal):
         if len(pheasants_here)>0:
             for pheasant in pheasants_here:
                 pheasant.remove()
-                self.lifetime += 10  # dodajemy energii na nastepne 6 klatek
+                self.lifetime += self.consumption * 20      # uwaga! dodajemy 20 jednostek podstawowej energii
             self.focused_prey = None
             self.hunting = False    # przestajemy polowac aktualnie
     
