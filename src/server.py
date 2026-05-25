@@ -66,7 +66,7 @@ def fox_pheasant_portrayal(agent):
 
     return portrayal
 
-canvas_element = mesa.visualization.CanvasGrid(fox_pheasant_portrayal, 80, 80, 880, 880)
+canvas_element = mesa.visualization.CanvasGrid(fox_pheasant_portrayal, 50, 50, 850, 850)
 
 class SpacerElement(mesa.visualization.TextElement):
     def render(self, model):
@@ -84,18 +84,14 @@ chart_element = mesa.visualization.ChartModule(
 
 model_params = {
     "title": "Simulation Parameters",
-    "initial_fox": mesa.visualization.NumberInput("Inicjalizacyjna Populacja lisów", value=4),
-    "initial_pheasant": mesa.visualization.NumberInput("Inicjalizacyjna Populacja bażantów", value=4),
-    "initial_wheat": mesa.visualization.NumberInput("Inicjalizacyjna Populacja pszenicy", value=5),
+    "initial_fox": mesa.visualization.NumberInput("Inicjalizacyjna Populacja lisów", value=6),
+    "initial_pheasant": mesa.visualization.NumberInput("Inicjalizacyjna Populacja bażantów", value=30),
+    "initial_wheat": mesa.visualization.NumberInput("Inicjalizacyjna Populacja pszenicy", value=60),
 
     "year_unit": mesa.visualization.NumberInput(
         "Jednostka roku<br><small>(wykorzystywana do długości życia zwierząt oraz okresów rozrodczych)</small>", 
-        value=5
-    ),
-    "base_consumption_unit": mesa.visualization.NumberInput(
-        "Jednostka zużycia energii<br><small>(wykorzystywana do metabolizmu)</small>", 
-        value=0.25
-    ),
+        value=20
+    )
 }
 
 server = mesa.visualization.ModularServer(

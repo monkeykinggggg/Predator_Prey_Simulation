@@ -3,9 +3,6 @@
 ### TODO
 Naprawić zachowanie bażantów
 Mapa - ta sama inicjalizacja, mozna lepiej porownac parametry i wykresy
-Wykres każdego gatunku agentów
-Dlugosc zycia jako jeden parametr (zeby te proporcje byly bardziej realistyczne)
-Poprawic UI
 Dokumentacja
 
 
@@ -83,3 +80,7 @@ zwykle:
 
 
 WAZNE!: jezeli dany gatunek wymrze to juz go nie odżywamy, kończymy z nim a jednocześnie kończymy z symulacją - jest to na tyle żadki przypadek, że możemy pominąć elemnt odżywania gatunku. Sama testująć symulację na różnych konfiguracjach parametrów, nie udało mi się dostać takiej sytuacji
+
+
+Środowiska do rozmnażania
+Tworzone są po przeciwnych narożnikach mapy, więc nasdtepuje spotkanie gatunków po dwóch przeciwnychg stronach (flad on themselves)

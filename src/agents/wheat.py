@@ -2,7 +2,7 @@ from typing import Tuple
 import mesa
 
 class Wheat(mesa.Agent):
-    def __init__(self, model: mesa.Model, lifetime:int = 350) -> None:
+    def __init__(self, model: mesa.Model, lifetime:int) -> None:
         """Class responsible for feeding Pheasants."""
         super().__init__(model.next_id(), model)
         self.lifetime: int = lifetime

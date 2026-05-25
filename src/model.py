@@ -4,7 +4,6 @@ from .agents import *
 from .agents.fox_habitat import FoxHabitat
 from .agents.pheasant_habitat import PheasantHabitat
 from .agents.wheat_factory import WheatFactory
-from math import floor
 
 class SimulationModel(mesa.Model):
     """Model simulating the interaction between foxes and pheasants in a grid environment."""
@@ -16,20 +15,19 @@ class SimulationModel(mesa.Model):
                 
                 # liczba klatek ile trwa rok, zwierzeta proporcjonalnie maja ustawiana maksymalna dlugosc zycia oraz czestotliwość okresów godów i produkcji jedzenia na podstawie tej jednostki
                 year_unit: int, 
-                # podstawowa jednostka zuzycia energii, na podstawie ktorej ustawiana jest konsumpcja energii przez lisy i bażanty na zwyczajne egzystowanie(metabolizm), bez polowania, sprintow itd
-                base_consumption_unit: int,
                 
                 # przedzial ile mlodych zwierzat moze sie urodzic w sezonie rozrodczym (losowana liczba z tego zakresu)
-                fox_mating_range: tuple = (3,5), # 3-5 na osobnika
-                pheasant_mating_range: tuple = (5,12), #  5-12 z samicy
+                fox_mating_range: tuple = (2,5), # 3-5 na osobnika
+                pheasant_mating_range: tuple = (3,8), #  5-8 z samicy
+                wheat_reproduction_range: tuple = (2,9), # z reproduktywnej pszenicy tworzy sie 5-20 nowych kłosów, ale tylko w sezonie rozrodczym
                 
                 iterations: int = 100,
                 *args: Any,
                 **kwargs: Any):
         super().__init__(*args, **kwargs)
 
-        self.width = 80
-        self.height = 80
+        self.width = 50
+        self.height = 50
         self.grid = mesa.space.MultiGrid(self.width, self.height, False)
 
         self.iterations = iterations
@@ -38,14 +36,17 @@ class SimulationModel(mesa.Model):
         self.num_of_foxes = initial_fox
         self.num_of_wheat = initial_wheat
         
+        fox_lifetime = year_unit * 5
+        pheasant_lifetime = year_unit * 3
+        wheat_lifetime = round(year_unit * 0.8)
         self.fox_params={
-            "lifetime": year_unit * 5,
-            "consumption": base_consumption_unit * 2,
+            "lifetime": fox_lifetime,
+            "consumption": 1/fox_lifetime,
             
         }
         self.pheasant_params={
-            "lifetime": year_unit * 3,
-            "consumption": base_consumption_unit * 1,
+            "lifetime": pheasant_lifetime,
+            "consumption": 1/pheasant_lifetime,
         }
         self.fox_habitat_params={
             "mating_season": year_unit * 1,
@@ -55,28 +56,19 @@ class SimulationModel(mesa.Model):
             "mating_season": year_unit * 1,
             "mating_range": (pheasant_mating_range[0], pheasant_mating_range[1])
         }
+
         self.food_factory_params={
-            "food_frequency": floor(year_unit * 0.8),
-            "food_lifetime": floor(year_unit * 0.8),
-            "food_amount": 1
+            "food_frequency": wheat_lifetime,
+            "food_lifetime": wheat_lifetime,
+            "food_amount": (wheat_reproduction_range[0], wheat_reproduction_range[1])
         }
         
 
 
         self.scheduler = mesa.time.BaseScheduler(self)
         
-        # Create fox habitat first so it exists when baby foxes reference it
         self.fox_habitat = FoxHabitat.create(self)
-        
-        # Create pheasant habitat at different location
         self.pheasant_habitat = PheasantHabitat.create(self)
-        while self.pheasant_habitat.pos == self.fox_habitat.pos:
-            # If they spawned at same location, move pheasant habitat
-            self.grid.remove_agent(self.pheasant_habitat)
-            x = self.random.randrange(self.width)
-            y = self.random.randrange(self.height)
-            self.grid.place_agent(self.pheasant_habitat, (x, y))
-
         WheatFactory(self, frequency=self.food_factory_params["food_frequency"], food_lifetime=self.food_factory_params["food_lifetime"], food_amount=self.food_factory_params["food_amount"])
 
         for _ in range(self.num_of_foxes):
